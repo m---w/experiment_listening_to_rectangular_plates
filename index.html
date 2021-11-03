@@ -1,0 +1,716 @@
+var timeline = [];
+
+
+// TEST Repeat Audio Plugin
+
+// var repeat_audio_plugin = {
+
+// type: "repeat-audio",
+// stimulus: `audio/dog_bark.mp3`,
+// questions:['Question1:','Question2:' ],
+// options: [['Answer1','Answer2'], ['Answer1','Answer2','Answer3']],
+// correct:['Blub','Blab'],
+// required:true,
+// force_correct:false
+// };
+// timeline.push(repeat_audio_plugin)
+
+
+var n_trials = 72; // gebraucht für die timeline
+
+
+var welcome_screen = {
+    type: 'html-button-response',
+    stimulus: '<h2>Hörversuch zur Wahrnehmung von Material und Geometrie rechteckiger Platten</h2>'+
+    '<p>Herzlich Willkommen!</p>'+
+    '<p>Dieser Versuch wird ca. 30 Minuten Ihrer kostbaren Zeit in Anspruch nehmen. Als kleines Dankeschön verlosen wir zwei Gutscheine (für Buchhandlung Moser oder Musik Hammer) im Wert von je 50 EUR unter allen Teilnehmenden.</p>'+
+    '<p><b>Motivation</b><br>(für Interessierte...)<br>Durch unsere alltäglichen Erfahrungen haben wir bereits eine ziemlich genaue Vorstellung davon, wie die Dinge klingen, mit denen wir ständig interagieren. Durch gezieltes Abklopfen können wir Rückschlüsse auf die physikalischen Eigenschaften eines Objekts ziehen. Doch wie genau ist uns das eigentlich möglich? <br> Und inwiefern eignen sich solche Klopfgeräusche, um beliebige andere Informationen zu vermitteln, zur Sonifikation also? Im Gegensatz zu abstrakten "Piepstönen" kann bei physikalisch plausiblen Klängen möglicherweise unsere Erfahrung aus dem Alltag als Referenz dienen, um die absolute Größenschätzung von Klangparametern zu erleichtern.</p>'+
+    '<p>Klicken Sie "Weiter", um jetzt teilzunehmen.</p>',
+    choices: ['Weiter'],
+    on_start: function() {
+        // set progress bar to 0 at the start of experiment
+        jsPsych.setProgressBar(0);
+    }
+}
+timeline.push(welcome_screen);
+
+/*
+var preload = {
+    type: 'preload',
+    auto_preload: true 
+}
+*/
+
+
+var preload = {
+	type: 'preload',
+	message: 'Das Experiment wird geladen. Dies kann einige Sekunden dauern.',
+	error_message: 'Das Experiment konnte nicht geladen werden. Bitte versuchen Sie es mit einem anderen Browser. Falls das Problem weiterhin besteht, schicken Sie eine E-Mail an weger@iem.at, um uns darauf hinzuweisen.',
+	images: ["Play.png", "beispielfragebogen.png"],
+	audio: [
+
+    // VAR 1 DECAY 1 METALLICITY 1
+    "exp2__variant_1__metallicity_1__rigidity_1__tenuity_1__decay_1.mp3",
+    "exp2__variant_1__metallicity_1__rigidity_1__tenuity_2__decay_1.mp3",
+    "exp2__variant_1__metallicity_1__rigidity_1__tenuity_3__decay_1.mp3",
+    "exp2__variant_1__metallicity_1__rigidity_2__tenuity_1__decay_1.mp3",
+    "exp2__variant_1__metallicity_1__rigidity_2__tenuity_2__decay_1.mp3",
+    "exp2__variant_1__metallicity_1__rigidity_2__tenuity_3__decay_1.mp3",
+    "exp2__variant_1__metallicity_1__rigidity_3__tenuity_1__decay_1.mp3",
+    "exp2__variant_1__metallicity_1__rigidity_3__tenuity_2__decay_1.mp3",
+    "exp2__variant_1__metallicity_1__rigidity_3__tenuity_3__decay_1.mp3",
+
+    // VAR 1 DECAY 1 METALLICITY 2
+    "exp2__variant_1__metallicity_2__rigidity_1__tenuity_1__decay_1.mp3",
+    "exp2__variant_1__metallicity_2__rigidity_1__tenuity_2__decay_1.mp3",
+    "exp2__variant_1__metallicity_2__rigidity_1__tenuity_3__decay_1.mp3",
+    "exp2__variant_1__metallicity_2__rigidity_2__tenuity_1__decay_1.mp3",
+    "exp2__variant_1__metallicity_2__rigidity_2__tenuity_2__decay_1.mp3",
+    "exp2__variant_1__metallicity_2__rigidity_2__tenuity_3__decay_1.mp3",
+    "exp2__variant_1__metallicity_2__rigidity_3__tenuity_1__decay_1.mp3",
+    "exp2__variant_1__metallicity_2__rigidity_3__tenuity_2__decay_1.mp3",
+    "exp2__variant_1__metallicity_2__rigidity_3__tenuity_3__decay_1.mp3",  
+
+    // VAR 1 DECAY 2 METALLICITY 1
+    "exp2__variant_1__metallicity_1__rigidity_1__tenuity_1__decay_2.mp3",
+    "exp2__variant_1__metallicity_1__rigidity_1__tenuity_2__decay_2.mp3",
+    "exp2__variant_1__metallicity_1__rigidity_1__tenuity_3__decay_2.mp3",
+    "exp2__variant_1__metallicity_1__rigidity_2__tenuity_1__decay_2.mp3",
+    "exp2__variant_1__metallicity_1__rigidity_2__tenuity_2__decay_2.mp3",
+    "exp2__variant_1__metallicity_1__rigidity_2__tenuity_3__decay_2.mp3",
+    "exp2__variant_1__metallicity_1__rigidity_3__tenuity_1__decay_2.mp3",
+    "exp2__variant_1__metallicity_1__rigidity_3__tenuity_2__decay_2.mp3",
+    "exp2__variant_1__metallicity_1__rigidity_3__tenuity_3__decay_2.mp3",
+
+    // VAR 1 DECAY 2 METALLICITY 2
+    "exp2__variant_1__metallicity_2__rigidity_1__tenuity_1__decay_2.mp3",
+    "exp2__variant_1__metallicity_2__rigidity_1__tenuity_2__decay_2.mp3",
+    "exp2__variant_1__metallicity_2__rigidity_1__tenuity_3__decay_2.mp3",
+    "exp2__variant_1__metallicity_2__rigidity_2__tenuity_1__decay_2.mp3",
+    "exp2__variant_1__metallicity_2__rigidity_2__tenuity_2__decay_2.mp3",
+    "exp2__variant_1__metallicity_2__rigidity_2__tenuity_3__decay_2.mp3",
+    "exp2__variant_1__metallicity_2__rigidity_3__tenuity_1__decay_2.mp3",
+    "exp2__variant_1__metallicity_2__rigidity_3__tenuity_2__decay_2.mp3",
+    "exp2__variant_1__metallicity_2__rigidity_3__tenuity_3__decay_2.mp3", 
+
+
+
+
+    // VAR 2 DECAY 1 METALLICITY 1
+    // "exp2__variant_2__metallicity_1__rigidity_1__tenuity_1__decay_1.mp3",
+    // "exp2__variant_2__metallicity_1__rigidity_1__tenuity_2__decay_1.mp3",
+    // "exp2__variant_2__metallicity_1__rigidity_1__tenuity_3__decay_1.mp3",
+    // "exp2__variant_2__metallicity_1__rigidity_2__tenuity_1__decay_1.mp3",
+    // "exp2__variant_2__metallicity_1__rigidity_2__tenuity_2__decay_1.mp3",
+    // "exp2__variant_2__metallicity_1__rigidity_2__tenuity_3__decay_1.mp3",
+    // "exp2__variant_2__metallicity_1__rigidity_3__tenuity_1__decay_1.mp3",
+    // "exp2__variant_2__metallicity_1__rigidity_3__tenuity_2__decay_1.mp3",
+    // "exp2__variant_2__metallicity_1__rigidity_3__tenuity_3__decay_1.mp3",
+
+    // VAR 2 DECAY 1 METALLICITY 2
+    // "exp2__variant_2__metallicity_2__rigidity_1__tenuity_1__decay_1.mp3",
+    // "exp2__variant_2__metallicity_2__rigidity_1__tenuity_2__decay_1.mp3",
+    // "exp2__variant_2__metallicity_2__rigidity_1__tenuity_3__decay_1.mp3",
+    // "exp2__variant_2__metallicity_2__rigidity_2__tenuity_1__decay_1.mp3",
+    // "exp2__variant_2__metallicity_2__rigidity_2__tenuity_2__decay_1.mp3",
+    // "exp2__variant_2__metallicity_2__rigidity_2__tenuity_3__decay_1.mp3",
+    // "exp2__variant_2__metallicity_2__rigidity_3__tenuity_1__decay_1.mp3",
+    // "exp2__variant_2__metallicity_2__rigidity_3__tenuity_2__decay_1.mp3",
+    // "exp2__variant_2__metallicity_2__rigidity_3__tenuity_3__decay_1.mp3",  
+
+    // VAR 2 DECAY 2 METALLICITY 1
+    // "exp2__variant_2__metallicity_1__rigidity_1__tenuity_1__decay_2.mp3",
+    // "exp2__variant_2__metallicity_1__rigidity_1__tenuity_2__decay_2.mp3",
+    // "exp2__variant_2__metallicity_1__rigidity_1__tenuity_3__decay_2.mp3",
+    // "exp2__variant_2__metallicity_1__rigidity_2__tenuity_1__decay_2.mp3",
+    // "exp2__variant_2__metallicity_1__rigidity_2__tenuity_2__decay_2.mp3",
+    // "exp2__variant_2__metallicity_1__rigidity_2__tenuity_3__decay_2.mp3",
+    // "exp2__variant_2__metallicity_1__rigidity_3__tenuity_1__decay_2.mp3",
+    // "exp2__variant_2__metallicity_1__rigidity_3__tenuity_2__decay_2.mp3",
+    // "exp2__variant_2__metallicity_1__rigidity_3__tenuity_3__decay_2.mp3",
+
+    // VAR 2 DECAY 2 METALLICITY 2
+    // "exp2__variant_2__metallicity_2__rigidity_1__tenuity_1__decay_2.mp3",
+    // "exp2__variant_2__metallicity_2__rigidity_1__tenuity_2__decay_2.mp3",
+    // "exp2__variant_2__metallicity_2__rigidity_1__tenuity_3__decay_2.mp3",
+    // "exp2__variant_2__metallicity_2__rigidity_2__tenuity_1__decay_2.mp3",
+    // "exp2__variant_2__metallicity_2__rigidity_2__tenuity_2__decay_2.mp3",
+    // "exp2__variant_2__metallicity_2__rigidity_2__tenuity_3__decay_2.mp3",
+    // "exp2__variant_2__metallicity_2__rigidity_3__tenuity_1__decay_2.mp3",
+    // "exp2__variant_2__metallicity_2__rigidity_3__tenuity_2__decay_2.mp3",
+    // "exp2__variant_2__metallicity_2__rigidity_3__tenuity_3__decay_2.mp3", 
+
+
+
+
+    // VAR 3 DECAY 1 METALLICITY 1
+    "exp2__variant_3__metallicity_1__rigidity_1__tenuity_1__decay_1.mp3",
+    "exp2__variant_3__metallicity_1__rigidity_1__tenuity_2__decay_1.mp3",
+    "exp2__variant_3__metallicity_1__rigidity_1__tenuity_3__decay_1.mp3",
+    "exp2__variant_3__metallicity_1__rigidity_2__tenuity_1__decay_1.mp3",
+    "exp2__variant_3__metallicity_1__rigidity_2__tenuity_2__decay_1.mp3",
+    "exp2__variant_3__metallicity_1__rigidity_2__tenuity_3__decay_1.mp3",
+    "exp2__variant_3__metallicity_1__rigidity_3__tenuity_1__decay_1.mp3",
+    "exp2__variant_3__metallicity_1__rigidity_3__tenuity_2__decay_1.mp3",
+    "exp2__variant_3__metallicity_1__rigidity_3__tenuity_3__decay_1.mp3",
+
+    // VAR 3 DECAY 1 METALLICITY 2
+    "exp2__variant_3__metallicity_2__rigidity_1__tenuity_1__decay_1.mp3",
+    "exp2__variant_3__metallicity_2__rigidity_1__tenuity_2__decay_1.mp3",
+    "exp2__variant_3__metallicity_2__rigidity_1__tenuity_3__decay_1.mp3",
+    "exp2__variant_3__metallicity_2__rigidity_2__tenuity_1__decay_1.mp3",
+    "exp2__variant_3__metallicity_2__rigidity_2__tenuity_2__decay_1.mp3",
+    "exp2__variant_3__metallicity_2__rigidity_2__tenuity_3__decay_1.mp3",
+    "exp2__variant_3__metallicity_2__rigidity_3__tenuity_1__decay_1.mp3",
+    "exp2__variant_3__metallicity_2__rigidity_3__tenuity_2__decay_1.mp3",
+    "exp2__variant_3__metallicity_2__rigidity_3__tenuity_3__decay_1.mp3",  
+
+    // VAR 3 DECAY 2 METALLICITY 1
+    "exp2__variant_3__metallicity_1__rigidity_1__tenuity_1__decay_2.mp3",
+    "exp2__variant_3__metallicity_1__rigidity_1__tenuity_2__decay_2.mp3",
+    "exp2__variant_3__metallicity_1__rigidity_1__tenuity_3__decay_2.mp3",
+    "exp2__variant_3__metallicity_1__rigidity_2__tenuity_1__decay_2.mp3",
+    "exp2__variant_3__metallicity_1__rigidity_2__tenuity_2__decay_2.mp3",
+    "exp2__variant_3__metallicity_1__rigidity_2__tenuity_3__decay_2.mp3",
+    "exp2__variant_3__metallicity_1__rigidity_3__tenuity_1__decay_2.mp3",
+    "exp2__variant_3__metallicity_1__rigidity_3__tenuity_2__decay_2.mp3",
+    "exp2__variant_3__metallicity_1__rigidity_3__tenuity_3__decay_2.mp3",
+
+    // VAR 3 DECAY 2 METALLICITY 2
+    "exp2__variant_3__metallicity_2__rigidity_1__tenuity_1__decay_2.mp3",
+    "exp2__variant_3__metallicity_2__rigidity_1__tenuity_2__decay_2.mp3",
+    "exp2__variant_3__metallicity_2__rigidity_1__tenuity_3__decay_2.mp3",
+    "exp2__variant_3__metallicity_2__rigidity_2__tenuity_1__decay_2.mp3",
+    "exp2__variant_3__metallicity_2__rigidity_2__tenuity_2__decay_2.mp3",
+    "exp2__variant_3__metallicity_2__rigidity_2__tenuity_3__decay_2.mp3",
+    "exp2__variant_3__metallicity_2__rigidity_3__tenuity_1__decay_2.mp3",
+    "exp2__variant_3__metallicity_2__rigidity_3__tenuity_2__decay_2.mp3",
+    "exp2__variant_3__metallicity_2__rigidity_3__tenuity_3__decay_2.mp3", 
+    
+    
+    // VAR 4 DECAY 1 METALLICITY 1
+    "exp2__variant_4__metallicity_1__rigidity_1__tenuity_1__decay_1.mp3",
+    "exp2__variant_4__metallicity_1__rigidity_1__tenuity_2__decay_1.mp3",
+    "exp2__variant_4__metallicity_1__rigidity_1__tenuity_3__decay_1.mp3",
+    "exp2__variant_4__metallicity_1__rigidity_2__tenuity_1__decay_1.mp3",
+    "exp2__variant_4__metallicity_1__rigidity_2__tenuity_2__decay_1.mp3",
+    "exp2__variant_4__metallicity_1__rigidity_2__tenuity_3__decay_1.mp3",
+    "exp2__variant_4__metallicity_1__rigidity_3__tenuity_1__decay_1.mp3",
+    "exp2__variant_4__metallicity_1__rigidity_3__tenuity_2__decay_1.mp3",
+    "exp2__variant_4__metallicity_1__rigidity_3__tenuity_3__decay_1.mp3",
+
+    // VAR 4 DECAY 1 METALLICITY 2
+    "exp2__variant_4__metallicity_2__rigidity_1__tenuity_1__decay_1.mp3",
+    "exp2__variant_4__metallicity_2__rigidity_1__tenuity_2__decay_1.mp3",
+    "exp2__variant_4__metallicity_2__rigidity_1__tenuity_3__decay_1.mp3",
+    "exp2__variant_4__metallicity_2__rigidity_2__tenuity_1__decay_1.mp3",
+    "exp2__variant_4__metallicity_2__rigidity_2__tenuity_2__decay_1.mp3",
+    "exp2__variant_4__metallicity_2__rigidity_2__tenuity_3__decay_1.mp3",
+    "exp2__variant_4__metallicity_2__rigidity_3__tenuity_1__decay_1.mp3",
+    "exp2__variant_4__metallicity_2__rigidity_3__tenuity_2__decay_1.mp3",
+    "exp2__variant_4__metallicity_2__rigidity_3__tenuity_3__decay_1.mp3",  
+
+    // VAR 4 DECAY 2 METALLICITY 1
+    "exp2__variant_4__metallicity_1__rigidity_1__tenuity_1__decay_2.mp3",
+    "exp2__variant_4__metallicity_1__rigidity_1__tenuity_2__decay_2.mp3",
+    "exp2__variant_4__metallicity_1__rigidity_1__tenuity_3__decay_2.mp3",
+    "exp2__variant_4__metallicity_1__rigidity_2__tenuity_1__decay_2.mp3",
+    "exp2__variant_4__metallicity_1__rigidity_2__tenuity_2__decay_2.mp3",
+    "exp2__variant_4__metallicity_1__rigidity_2__tenuity_3__decay_2.mp3",
+    "exp2__variant_4__metallicity_1__rigidity_3__tenuity_1__decay_2.mp3",
+    "exp2__variant_4__metallicity_1__rigidity_3__tenuity_2__decay_2.mp3",
+    "exp2__variant_4__metallicity_1__rigidity_3__tenuity_3__decay_2.mp3",
+
+    // VAR 4 DECAY 2 METALLICITY 2
+    "exp2__variant_4__metallicity_2__rigidity_1__tenuity_1__decay_2.mp3",
+    "exp2__variant_4__metallicity_2__rigidity_1__tenuity_2__decay_2.mp3",
+    "exp2__variant_4__metallicity_2__rigidity_1__tenuity_3__decay_2.mp3",
+    "exp2__variant_4__metallicity_2__rigidity_2__tenuity_1__decay_2.mp3",
+    "exp2__variant_4__metallicity_2__rigidity_2__tenuity_2__decay_2.mp3",
+    "exp2__variant_4__metallicity_2__rigidity_2__tenuity_3__decay_2.mp3",
+    "exp2__variant_4__metallicity_2__rigidity_3__tenuity_1__decay_2.mp3",
+    "exp2__variant_4__metallicity_2__rigidity_3__tenuity_2__decay_2.mp3",
+    "exp2__variant_4__metallicity_2__rigidity_3__tenuity_3__decay_2.mp3", 
+
+
+
+    // "audio/dog_bark.mp3"
+    // "audio/drink_glass_breaking.mp3",
+    // "audio/coins_rattle.mp3"
+    // add more audio files here:
+    ],
+}    
+timeline.push(preload)
+
+
+var professional_listener = {
+    type: 'html-button-response',
+    stimulus: '<p>Gestatten Sie eine persönliche Frage:</p>'+
+    '<p>Würden Sie Ihr Gehör als geschult bezeichnen?<br>(z.B. durch Spielen eines Instruments oder berufliche Erfahrung)</p>',
+        
+    choices: ['Ja','Nein']
+}
+timeline.push(professional_listener)
+
+
+var instructions = {
+    type: 'instructions',
+    pages: [
+    //'<h2>Motivation</h2>'+
+    //'<p>Wozu das alles? (für Interessierte...)</p>'+
+    //'<p>Durch unsere alltäglichen Erfahrungen haben wir bereits eine ziemlich genaue Vorstellung davon, wie die Dinge klingen, mit denen wir ständig interagieren. Durch gezieltes Abklopfen können wir Rückschlüsse auf die physikalischen Eigenschaften eines Objekts ziehen. Doch wie genau ist uns das eigentlich möglich?<br>Weiters soll erforscht werden, inwiefern sich solche Klopfgeräusche eignen, um beliebige Informationen zu vermitteln: zur Sonifikation also. Bei der Nutzung physikalischer Parameter, im Gegensatz zu abstrakten Klangparametern wie Tonhöhe oder Klangfarbe, kann unsere Erfahrung aus dem Alltag als Referenz dienen, um absolute Größenschätzungen von Parametern zu ermöglichen.</p>',  
+      
+    '<h2>Versuchsanleitung</h2>'+
+    '<p>In diesem Hörversuch werden Ihnen Klopfgeräusche von rechteckigen Platten mit unterschiedlichen Materialien und Geometrien vorgespielt.</p>'+
+    // '<p>Ihre Aufgabe ist es, sich die Klopfgeräusche genau anzuhören, und zu versuchen, die Parameter der Platte zu erkennen, auf die geklopft wurde.</p>'+
+    '<p>Ihre Aufgabe ist es, sich die Klopfgeräusche genau anzuhören, und anschließend die physikalischen Eigenschaften der abgeklopften Platte zu identifizieren.</p>',
+    //'<p>Mit "Previous"/"Next" navigieren Sie durch diese Anleitung.<p>',
+    //'<p>Zuerst werden Ihnen die Plattenparameter einzeln vorgestellt. Anschließend können Sie sich alle Kombinationen von Parametern nebeneinander anhören und miteinander vergleichen.</p>',
+    
+    // '<p>Bitte setzen Sie nun die besten Kopfhörer auf, die Sie gerade zur Hand haben.</p>',
+
+
+    '<p>Nach jeder gehörten Aufnahme bitten wir Sie, Ihre Antworten auf einem Fragebogen auszuwählen.</p>'+
+    // '<p>Mit dem Replay-Knopf können Sie die Wiedergabe beliebig oft wiederholen.<p>'+
+    // '<p>Beispielfragebogen:</p>'+
+    '<img src="beispielfragebogen.png" style="width:25%" alt="Beispielfragebogen" /img>',
+    
+    '<p>Zuerst werden Ihnen die Plattenparameter einzeln vorgestellt.</p>'+
+    '<p>Anschließend können Sie sich alle Kombinationen von Parametern nebeneinander anhören und miteinander vergleichen.</p>',
+
+    '<p>Bitte setzen Sie sich nun die besten Kopfhörer auf, die Sie gerade verfügbar haben.</p>',
+    
+    '<h3>Material</h3>'+
+    '<p>Es gibt 6 verschiedene Materialien, eingeteilt in 2 Hauptgruppen:</p>'+
+    '<p><b>Nichtmetallisch &nbsp &nbsp &nbsp &nbsp &nbsp / &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Metallisch</b></p>'+
+    '<p>Plastik &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  / &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Gold </p>'+
+    '<audio controls> <source src="exp2__variant_2__metallicity_1__rigidity_1__tenuity_1__decay_2.mp3" type="audio/mpeg"> </audio> <audio controls> <source src="exp2__variant_2__metallicity_2__rigidity_1__tenuity_1__decay_2.mp3" type="audio/mpeg"> </audio> <br>' +
+    '<p>Holz &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  / &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Messing </p>'+
+    '<audio controls> <source src="exp2__variant_2__metallicity_1__rigidity_2__tenuity_1__decay_2.mp3" type="audio/mpeg"> </audio> <audio controls> <source src="exp2__variant_2__metallicity_2__rigidity_2__tenuity_1__decay_2.mp3" type="audio/mpeg"> </audio> <br>' +
+    '<p>Glas &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp / &nbsp &nbsp &nbsp &nbsp Aluminium</p>'+
+    '<audio controls> <source src="exp2__variant_2__metallicity_1__rigidity_3__tenuity_1__decay_2.mp3" type="audio/mpeg"> </audio> <audio controls> <source src="exp2__variant_2__metallicity_2__rigidity_3__tenuity_1__decay_2.mp3" type="audio/mpeg"> </audio> <br>',
+
+
+    '<h3>Geometrie</h3>'+
+    '<p>Es gibt drei verschiedene Plattengeometrien:</p>'+
+   // '<img src="1zu2.png" style="width:50%" alt="Geometrie" /img>'+
+    '<h3>2:1</h3> <canvas id="2:1" width="160px" height="80px" style="border:5px solid #33ccff;"> Your browser does not support the HTML canvas tag. </canvas> <br>'+
+    '<br> <audio controls> <source src="exp2__variant_2__metallicity_1__rigidity_3__tenuity_1__decay_2.mp3" type="audio/mpeg"> </audio> <br>' +
+    '<br> <h3>4:1</h3> <canvas id=":14" width="160px" height="40px" style="border:5px solid #33ccff;"> Your browser does not support the HTML canvas tag. </canvas> <br>'+
+    '<br> <audio controls> <source src="exp2__variant_2__metallicity_1__rigidity_3__tenuity_2__decay_2.mp3" type="audio/mpeg"> </audio> <br>' +
+    '<br> <h3>8:1</h3> <canvas id="8:1" width="160px" height="20px" style="border:5px solid #33ccff;"> Your browser does not support the HTML canvas tag. </canvas> <br>'+
+    '<br> <audio controls> <source src="exp2__variant_2__metallicity_1__rigidity_3__tenuity_3__decay_2.mp3" type="audio/mpeg"> </audio> <br>',
+
+    
+    // '<h2>Trainings-Matrix</h2>'+
+    // '<style> nav#nav1matrix{ margin: 60px; } nav#nav1matrix > a{display:inline-block; width:100px; height: 50px; background:#B9E1FF; color:#000; padding:30px; text-decoration:none; border-radius:7px; font-family:"Arial Black", Gadget, sans-serif; } nav#nav1matrix > a:hover{ background: #BBEA00; } nav#nav1matrix > a:active{ background: #EEFFA8; } h2 {text-align: center;} nav {text-align: center;} </style> <h2>Nichtmetallisch</h2> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s11111.play()">Plastik<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s11121.play()">Plastik<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s11131.play()">Plastik<br/>1:8</a> </nav> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s11211.play()">Holz<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s11221.play()">Holz<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s11231.play()">Holz<br/>1:8</a> </nav> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s11311.play()">Glas<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s11321.play()">Glas<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s11331.play()">Glas<br/>1:8</a> </nav> <br/> <h2>Metallisch</h2> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s12111.play()">Gold<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s12121.play()">Gold<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s12131.play()">Gold<br/>1:8</a> </nav> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s12211.play()">Messing<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s12221.play()">Messing<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s12231.play()">Messing<br/>1:8</a> </nav> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s12311.play()">Aluminium<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s12321.play()">Aluminium<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s12331.play()">Aluminium<br/>1:8</a> </nav>',
+
+    '<h3>Dämpfung</h3>'+
+    '<p>Der Versuch wird zweimal in Folge durchgeführt: Einmal mit stark gedämpften, und einmal mit schwach gedämpften Platten.</p>'+
+    '<p>Der Unterschied is hörbar in der Ausklingdauer.</p>'+
+    '<p>stark gedämpft &nbsp &nbsp &nbsp &nbsp &nbsp / &nbsp &nbsp &nbsp &nbsp schwach gedämpft</p>'+
+    '<audio controls> <source src="exp2__variant_2__metallicity_1__rigidity_3__tenuity_1__decay_1.mp3" type="audio/mpeg"> </audio> <audio controls> <source src="exp2__variant_2__metallicity_1__rigidity_3__tenuity_1__decay_2.mp3" type="audio/mpeg"> </audio> <br>'+
+    '<p>Vor dem jeweiligen Block können Sie sich alle Kombinationen von Parametern nebeneinander anhören und miteinander vergleichen.</p>',
+
+    '<h3>Hinweis</h3>'+
+    '<p>Lassen Sie sich nicht entmutigen, wenn einige Klänge kaum unterscheidbar sind. Auch in der Natur können unterschiedliche Ereignisse denselben Klang hervorrufen.</p>'+
+    '<p>Zusätzlich sind die physikalischen Parameter (und damit auch die Klänge) naturgemäß minimalen Schwankungen unterworfen.</p>'+
+    '<p>Geben Sie einfach Ihr Bestes, und verlassen Sie sich auf Ihre Intuition!</p>',
+
+    // Hinweis</h3>'+
+    '<p>Sie können jeden Klang mit dem Replay-Button beliebig oft anhören. Es gibt kein Zeitlimit.</p>'+
+    '<p>Um die Auswertung zu erleichtern, bitten wir Sie, längere Pausen im laufenden Versuch zu vermeiden. Zwischen den beiden Versuchsteilen haben Sie die Möglichkeit, eine Pause einzulegen.</p>'+
+    '<p>Klicken Sie "Weiter", um die Versuchsanleitung zu beenden, und zum Training fortzuschreiten.</p>'
+
+    
+    ],
+    show_clickable_nav: true,
+    button_label_previous: "Zurück",
+    button_label_next: "Weiter",
+    on_finish: function() {
+        // set progress bar to 0 at the start of experiment
+        jsPsych.setProgressBar(0.1);
+    }
+}
+timeline.push(instructions)
+
+var training_matrix_gedämpft = {
+    type: 'html-button-response',
+    stimulus: '<h2>Trainings-Matrix (stark gedämpft)</h2>'+
+    '<p>Prägen Sie sich die klanglichen Auswirkungen der physikalischen Parameter gut ein.</p>'+
+    '<style> nav#nav1matrix{ margin: 60px; } nav#nav1matrix > a{display:inline-block; width:100px; height: 50px; background:#B9E1FF; color:#000; padding:30px; text-decoration:none; border-radius:7px; font-family:"Arial Black", Gadget, sans-serif; } nav#nav1matrix > a:hover{ background: #BBEA00; } nav#nav1matrix > a:active{ background: #EEFFA8; } h2 {text-align: center;} nav {text-align: center;} </style> <h2>Nichtmetallisch</h2> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s11111.play()">Plastik<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s11121.play()">Plastik<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s11131.play()">Plastik<br/>1:8</a> </nav> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s11211.play()">Holz<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s11221.play()">Holz<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s11231.play()">Holz<br/>1:8</a> </nav> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s11311.play()">Glas<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s11321.play()">Glas<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s11331.play()">Glas<br/>1:8</a> </nav> <br/> <h2>Metallisch</h2> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s12111.play()">Gold<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s12121.play()">Gold<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s12131.play()">Gold<br/>1:8</a> </nav> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s12211.play()">Messing<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s12221.play()">Messing<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s12231.play()">Messing<br/>1:8</a> </nav> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s12311.play()">Aluminium<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s12321.play()">Aluminium<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s12331.play()">Aluminium<br/>1:8</a> </nav>',
+    choices: ['Training beenden'],  
+    post_trial_gap: 500,
+    on_finish: function() {
+        // at the end of each trial, update the progress bar
+        // based on the current value and the proportion to update for each trial
+        var curr_progress_bar_value = jsPsych.getProgressBarCompleted();
+        jsPsych.setProgressBar(curr_progress_bar_value + 0.1);
+    }
+};
+// timeline.push(training_matrix_gedämpft);
+
+var training_matrix_ungedämpft = {
+    type: 'html-button-response',
+    stimulus: '<h2>Trainings-Matrix (schwach gedämpft)</h2>'+
+    '<p>Prägen Sie sich die klanglichen Auswirkungen der physikalischen Parameter gut ein.</p>'+
+    '<style> nav#nav1matrix{ margin: 60px; } nav#nav1matrix > a{display:inline-block; width:100px; height: 50px; background:#B9E1FF; color:#000; padding:30px; text-decoration:none; border-radius:7px; font-family:"Arial Black", Gadget, sans-serif; } nav#nav1matrix > a:hover{ background: #BBEA00; } nav#nav1matrix > a:active{ background: #EEFFA8; } h2 {text-align: center;} nav {text-align: center;} </style> <h2>Nichtmetallisch</h2> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s11112.play()">Plastik<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s11122.play()">Plastik<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s11132.play()">Plastik<br/>1:8</a> </nav> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s11212.play()">Holz<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s11222.play()">Holz<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s11232.play()">Holz<br/>1:8</a> </nav> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s11312.play()">Glas<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s11322.play()">Glas<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s11332.play()">Glas<br/>1:8</a> </nav> <br/> <h2>Metallisch</h2> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s12112.play()">Gold<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s12122.play()">Gold<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s12132.play()">Gold<br/>1:8</a> </nav> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s12212.play()">Messing<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s12222.play()">Messing<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s12232.play()">Messing<br/>1:8</a> </nav> <nav id="nav1matrix"> <a href="javascript:void(null)" onmousedown="s12312.play()">Aluminium<br/>1:2</a> <a href="javascript:void(null)" onmousedown="s12322.play()">Aluminium<br/>1:4</a> <a href="javascript:void(null)" onmousedown="s12332.play()">Aluminium<br/>1:8</a> </nav>',
+    choices: ['Training beenden'],  
+    post_trial_gap: 500,
+    on_finish: function() {
+        // at the end of each trial, update the progress bar
+        // based on the current value and the proportion to update for each trial
+        var curr_progress_bar_value = jsPsych.getProgressBarCompleted();
+        jsPsych.setProgressBar(curr_progress_bar_value + 0.1);
+    }
+};
+// timeline.push(training_matrix_ungedämpft);
+
+
+var timeline_variables_block_gedämpft = [
+    // {sound:"audio/dog_bark.mp3"},
+    // {sound:"audio/drink_glass_breaking.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_1__tenuity_1__decay_1.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_1__tenuity_2__decay_1.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_1__tenuity_3__decay_1.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_2__tenuity_1__decay_1.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_2__tenuity_2__decay_1.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_2__tenuity_3__decay_1.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_3__tenuity_1__decay_1.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_3__tenuity_2__decay_1.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_3__tenuity_3__decay_1.mp3"},
+    
+    {sound:"exp2__variant_3__metallicity_2__rigidity_1__tenuity_1__decay_1.mp3"},
+    {sound:"exp2__variant_3__metallicity_2__rigidity_1__tenuity_2__decay_1.mp3"},
+    {sound:"exp2__variant_3__metallicity_2__rigidity_1__tenuity_3__decay_1.mp3"},
+    {sound:"exp2__variant_3__metallicity_2__rigidity_2__tenuity_1__decay_1.mp3"},
+    {sound:"exp2__variant_3__metallicity_2__rigidity_2__tenuity_2__decay_1.mp3"},
+    {sound:"exp2__variant_3__metallicity_2__rigidity_2__tenuity_3__decay_1.mp3"},
+    {sound:"exp2__variant_3__metallicity_2__rigidity_3__tenuity_1__decay_1.mp3"},
+    {sound:"exp2__variant_3__metallicity_2__rigidity_3__tenuity_2__decay_1.mp3"},
+    {sound:"exp2__variant_3__metallicity_2__rigidity_3__tenuity_3__decay_1.mp3"},
+    
+    {sound:"exp2__variant_4__metallicity_1__rigidity_1__tenuity_1__decay_1.mp3"},
+    {sound:"exp2__variant_4__metallicity_1__rigidity_1__tenuity_2__decay_1.mp3"},
+    {sound:"exp2__variant_4__metallicity_1__rigidity_1__tenuity_3__decay_1.mp3"},
+    {sound:"exp2__variant_4__metallicity_1__rigidity_2__tenuity_1__decay_1.mp3"},
+    {sound:"exp2__variant_4__metallicity_1__rigidity_2__tenuity_2__decay_1.mp3"},
+    {sound:"exp2__variant_4__metallicity_1__rigidity_2__tenuity_3__decay_1.mp3"},
+    {sound:"exp2__variant_4__metallicity_1__rigidity_3__tenuity_1__decay_1.mp3"},
+    {sound:"exp2__variant_4__metallicity_1__rigidity_3__tenuity_2__decay_1.mp3"},
+    {sound:"exp2__variant_4__metallicity_1__rigidity_3__tenuity_3__decay_1.mp3"},
+    
+    {sound:"exp2__variant_4__metallicity_2__rigidity_1__tenuity_1__decay_1.mp3"},
+    {sound:"exp2__variant_4__metallicity_2__rigidity_1__tenuity_2__decay_1.mp3"},
+    {sound:"exp2__variant_4__metallicity_2__rigidity_1__tenuity_3__decay_1.mp3"},
+    {sound:"exp2__variant_4__metallicity_2__rigidity_2__tenuity_1__decay_1.mp3"},
+    {sound:"exp2__variant_4__metallicity_2__rigidity_2__tenuity_2__decay_1.mp3"},
+    {sound:"exp2__variant_4__metallicity_2__rigidity_2__tenuity_3__decay_1.mp3"},
+    {sound:"exp2__variant_4__metallicity_2__rigidity_3__tenuity_1__decay_1.mp3"},
+    {sound:"exp2__variant_4__metallicity_2__rigidity_3__tenuity_2__decay_1.mp3"},
+    {sound:"exp2__variant_4__metallicity_2__rigidity_3__tenuity_3__decay_1.mp3"}
+
+
+    // add more sounds here, don't forget comma to separate
+];
+
+var timeline_variables_block_ungedämpft = [
+    // {sound:"audio/dog_bark.mp3"},
+    // {sound:"audio/drink_glass_breaking.mp3"}
+    // {sound:"audio/coins_rattle.mp3"}
+    {sound:"exp2__variant_3__metallicity_1__rigidity_1__tenuity_1__decay_2.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_1__tenuity_2__decay_2.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_1__tenuity_3__decay_2.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_2__tenuity_1__decay_2.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_2__tenuity_2__decay_2.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_2__tenuity_3__decay_2.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_3__tenuity_1__decay_2.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_3__tenuity_2__decay_2.mp3"},
+    {sound:"exp2__variant_3__metallicity_1__rigidity_3__tenuity_3__decay_2.mp3"},
+
+    {sound:"exp2__variant_3__metallicity_2__rigidity_1__tenuity_1__decay_2.mp3"},
+    {sound:"exp2__variant_3__metallicity_2__rigidity_1__tenuity_2__decay_2.mp3"},
+    {sound:"exp2__variant_3__metallicity_2__rigidity_1__tenuity_3__decay_2.mp3"},
+    {sound:"exp2__variant_3__metallicity_2__rigidity_2__tenuity_1__decay_2.mp3"},
+    {sound:"exp2__variant_3__metallicity_2__rigidity_2__tenuity_2__decay_2.mp3"},
+    {sound:"exp2__variant_3__metallicity_2__rigidity_2__tenuity_3__decay_2.mp3"},
+    {sound:"exp2__variant_3__metallicity_2__rigidity_3__tenuity_1__decay_2.mp3"},
+    {sound:"exp2__variant_3__metallicity_2__rigidity_3__tenuity_2__decay_2.mp3"},
+    {sound:"exp2__variant_3__metallicity_2__rigidity_3__tenuity_3__decay_2.mp3"},
+    
+    {sound:"exp2__variant_4__metallicity_1__rigidity_1__tenuity_1__decay_2.mp3"},
+    {sound:"exp2__variant_4__metallicity_1__rigidity_1__tenuity_2__decay_2.mp3"},
+    {sound:"exp2__variant_4__metallicity_1__rigidity_1__tenuity_3__decay_2.mp3"},
+    {sound:"exp2__variant_4__metallicity_1__rigidity_2__tenuity_1__decay_2.mp3"},
+    {sound:"exp2__variant_4__metallicity_1__rigidity_2__tenuity_2__decay_2.mp3"},
+    {sound:"exp2__variant_4__metallicity_1__rigidity_2__tenuity_3__decay_2.mp3"},
+    {sound:"exp2__variant_4__metallicity_1__rigidity_3__tenuity_1__decay_2.mp3"},
+    {sound:"exp2__variant_4__metallicity_1__rigidity_3__tenuity_2__decay_2.mp3"},
+    {sound:"exp2__variant_4__metallicity_1__rigidity_3__tenuity_3__decay_2.mp3"},
+
+    {sound:"exp2__variant_4__metallicity_2__rigidity_1__tenuity_1__decay_2.mp3"},
+    {sound:"exp2__variant_4__metallicity_2__rigidity_1__tenuity_2__decay_2.mp3"},
+    {sound:"exp2__variant_4__metallicity_2__rigidity_1__tenuity_3__decay_2.mp3"},
+    {sound:"exp2__variant_4__metallicity_2__rigidity_2__tenuity_1__decay_2.mp3"},
+    {sound:"exp2__variant_4__metallicity_2__rigidity_2__tenuity_2__decay_2.mp3"},
+    {sound:"exp2__variant_4__metallicity_2__rigidity_2__tenuity_3__decay_2.mp3"},
+    {sound:"exp2__variant_4__metallicity_2__rigidity_3__tenuity_1__decay_2.mp3"},
+    {sound:"exp2__variant_4__metallicity_2__rigidity_3__tenuity_2__decay_2.mp3"},
+    {sound:"exp2__variant_4__metallicity_2__rigidity_3__tenuity_3__decay_2.mp3"}
+    
+    // add more sounds here, don't forget comma to separate
+];
+// Sounds für Trainings-Matrix
+//  s(Sound) - Variant - Metallicity - Rigidity(Material) - Tenuity(Aspect Ratio) - Decay
+
+    //VARIANT 1 METALLICITY 1 DECAY 1
+    // Plastik
+    var s11111 = new Audio();
+    s11111.src = "exp2__variant_1__metallicity_1__rigidity_1__tenuity_1__decay_1.mp3";
+    var s11121 = new Audio();
+    s11121.src = "exp2__variant_1__metallicity_1__rigidity_1__tenuity_2__decay_1.mp3";
+    var s11131 = new Audio();
+    s11131.src = "exp2__variant_1__metallicity_1__rigidity_1__tenuity_3__decay_1.mp3";
+    // Holz
+    var s11211 = new Audio();
+    s11211.src = "exp2__variant_1__metallicity_1__rigidity_2__tenuity_1__decay_1.mp3";
+    var s11221 = new Audio();
+    s11221.src = "exp2__variant_1__metallicity_1__rigidity_2__tenuity_2__decay_1.mp3";
+    var s11231 = new Audio();
+    s11231.src = "exp2__variant_1__metallicity_1__rigidity_2__tenuity_3__decay_1.mp3";
+    // Glas
+    var s11311 = new Audio();
+    s11311.src = "exp2__variant_1__metallicity_1__rigidity_3__tenuity_1__decay_1.mp3";
+    var s11321 = new Audio();
+    s11321.src = "exp2__variant_1__metallicity_1__rigidity_3__tenuity_2__decay_1.mp3";
+    var s11331 = new Audio();
+    s11331.src = "exp2__variant_1__metallicity_1__rigidity_3__tenuity_3__decay_1.mp3";
+
+        //VARIANT 1 METALLICITY 2 DECAY 1
+    // Gold
+    var s12111 = new Audio();
+    s12111.src = "exp2__variant_1__metallicity_2__rigidity_1__tenuity_1__decay_1.mp3";
+    var s12121 = new Audio();
+    s12121.src = "exp2__variant_1__metallicity_2__rigidity_1__tenuity_2__decay_1.mp3";
+    var s12131 = new Audio();
+    s12131.src = "exp2__variant_1__metallicity_2__rigidity_1__tenuity_3__decay_1.mp3";
+    // Messing
+    var s12211 = new Audio();
+    s12211.src = "exp2__variant_1__metallicity_2__rigidity_2__tenuity_1__decay_1.mp3";
+    var s12221 = new Audio();
+    s12221.src = "exp2__variant_1__metallicity_2__rigidity_2__tenuity_2__decay_1.mp3";
+    var s12231 = new Audio();
+    s12231.src = "exp2__variant_1__metallicity_2__rigidity_2__tenuity_3__decay_1.mp3";
+    // Aluminium
+    var s12311 = new Audio();
+    s12311.src = "exp2__variant_1__metallicity_2__rigidity_3__tenuity_1__decay_1.mp3";
+    var s12321 = new Audio();
+    s12321.src = "exp2__variant_1__metallicity_2__rigidity_3__tenuity_2__decay_1.mp3";
+    var s12331 = new Audio();
+    s12331.src = "exp2__variant_1__metallicity_2__rigidity_3__tenuity_3__decay_1.mp3";
+
+
+
+    //  s(Sound) - Variant - Metallicity - Rigidity(Material) - Tenuity(Aspect Ratio) - Decay
+
+    //VARIANT 1 METALLICITY 1 decay 2
+    // Plastik
+    var s11112 = new Audio();
+    s11112.src = "exp2__variant_1__metallicity_1__rigidity_1__tenuity_1__decay_2.mp3";
+    var s11122 = new Audio();
+    s11122.src = "exp2__variant_1__metallicity_1__rigidity_1__tenuity_2__decay_2.mp3";
+    var s11132 = new Audio();
+    s11132.src = "exp2__variant_1__metallicity_1__rigidity_1__tenuity_3__decay_2.mp3";
+    // Holz
+    var s11212 = new Audio();
+    s11212.src = "exp2__variant_1__metallicity_1__rigidity_2__tenuity_1__decay_2.mp3";
+    var s11222 = new Audio();
+    s11222.src = "exp2__variant_1__metallicity_1__rigidity_2__tenuity_2__decay_2.mp3";
+    var s11232 = new Audio();
+    s11232.src = "exp2__variant_1__metallicity_1__rigidity_2__tenuity_3__decay_2.mp3";
+    // Glas
+    var s11312 = new Audio();
+    s11312.src = "exp2__variant_1__metallicity_1__rigidity_3__tenuity_1__decay_2.mp3";
+    var s11322 = new Audio();
+    s11322.src = "exp2__variant_1__metallicity_1__rigidity_3__tenuity_2__decay_2.mp3";
+    var s11332 = new Audio();
+    s11332.src = "exp2__variant_1__metallicity_1__rigidity_3__tenuity_3__decay_2.mp3";
+
+        //VARIANT 1 METALLICITY 2 decay 2
+    // Gold
+    var s12112 = new Audio();
+    s12112.src = "exp2__variant_1__metallicity_2__rigidity_1__tenuity_1__decay_2.mp3";
+    var s12122 = new Audio();
+    s12122.src = "exp2__variant_1__metallicity_2__rigidity_1__tenuity_2__decay_2.mp3";
+    var s12132 = new Audio();
+    s12132.src = "exp2__variant_1__metallicity_2__rigidity_1__tenuity_3__decay_2.mp3";
+    // Messing
+    var s12212 = new Audio();
+    s12212.src = "exp2__variant_1__metallicity_2__rigidity_2__tenuity_1__decay_2.mp3";
+    var s12222 = new Audio();
+    s12222.src = "exp2__variant_1__metallicity_2__rigidity_2__tenuity_2__decay_2.mp3";
+    var s12232 = new Audio();
+    s12232.src = "exp2__variant_1__metallicity_2__rigidity_2__tenuity_3__decay_2.mp3";
+    // Aluminium
+    var s12312 = new Audio();
+    s12312.src = "exp2__variant_1__metallicity_2__rigidity_3__tenuity_1__decay_2.mp3";
+    var s12322 = new Audio();
+    s12322.src = "exp2__variant_1__metallicity_2__rigidity_3__tenuity_2__decay_2.mp3";
+    var s12332 = new Audio();
+    s12332.src = "exp2__variant_1__metallicity_2__rigidity_3__tenuity_3__decay_2.mp3";
+
+
+
+// var audio_trial = {
+//     type: 'audio-keyboard-response',
+//     stimulus: jsPsych.timelineVariable('sound'),
+//     choices: jsPsych.NO_KEYS,
+//     trial_ends_after_audio: true
+// }
+
+// var audio_trial_2 = {
+//     type: 'audio-keyboard-response',
+//     stimulus: jsPsych.timelineVariable('sound'),
+//     choices: jsPsych.NO_KEYS,
+//     choices: ['Play again','Continue'],
+//     response_allowed_while_playing: false
+// }
+
+//timeline.push(audio_trial);
+
+
+var pre_start_1 = {
+    type: 'html-button-response',
+    stimulus: '<p>Nun beginnt der erste Block des Hörversuchs. Er beinhaltet 36 Klänge.</p>'+
+        '<p>Wenn Sie bereit sind, drücken Sie "Hörversuch starten".</p>',
+    choices: ['Hörversuch starten'],
+    post_trial_gap: 500
+}
+
+var pre_start_2 = {
+    type: 'html-button-response',
+    stimulus:'<p>Sie haben die erste Hälfte des Versuchs geschafft!</p>'+ 
+    '<p>Falls Sie eine kurze Pause einlegen möchten, ist jetzt der richtige Zeitpunkt dafür.</p>'+
+    '<p>Nun beginnt der zweite Teil des Hörversuchs. Er beinhaltet ebenfalls 36 Klänge.</p>'+
+        '<p>Zu Beginn können Sie noch einmal alle Klänge nebeneinander vergleichen.</p>',
+        //'<p>Wenn Sie bereit sind, drücken Sie "Teil 2 starten".</p>',
+    choices: ['Teil 2 starten'],
+    post_trial_gap: 500
+}
+
+
+
+// timeline.push(pre_start);
+
+var audio_repeat = {
+    type: "repeat-audio",
+    stimulus: jsPsych.timelineVariable('sound'),
+    questions:['Nichtmetall oder Metall:','Material: (Nichtmetall / Metall)', 'Geometrie:'],
+    options: [['Nichtmetall','Metall'], ['Plastik / Gold','Holz / Messing','Glas / Aluminium'],['kompakt (2:1)','länglich (4:1)','stabförmig (8:1)']],
+    correct:['NA','NA','NA'],
+    required:true,
+    force_correct:false,
+    horizontal:false,
+    post_trial_gap: 0,
+    on_finish: function() {
+        // at the end of each trial, update the progress bar
+        // based on the current value and the proportion to update for each trial
+        var curr_progress_bar_value = jsPsych.getProgressBarCompleted();
+        jsPsych.setProgressBar(curr_progress_bar_value + (0.7/n_trials));
+    }
+  };
+
+
+
+var blocks = [timeline_variables_block_gedämpft, timeline_variables_block_ungedämpft];
+// blocks = jsPsych.randomization.shuffle(blocks);
+
+var test_procedure_block_1 = {
+    timeline: [audio_repeat],
+    timeline_variables: blocks[0],
+    randomize_order: true
+}
+// timeline.push(test_procedure_block_1);
+
+
+var test_procedure_block_2 = {
+    timeline: [audio_repeat],
+    timeline_variables: blocks[1],
+    randomize_order: true
+}
+// timeline.push(test_procedure_block_2);
+
+var myArray = [1,2];
+var shuffledArray = jsPsych.randomization.shuffle(myArray);
+
+if (shuffledArray[0] == 1) {
+    timeline.push(training_matrix_gedämpft);
+    timeline.push(pre_start_1);
+    timeline.push(test_procedure_block_1);
+    
+} else {
+    timeline.push(training_matrix_ungedämpft);
+    timeline.push(pre_start_1);
+    timeline.push(test_procedure_block_2);
+}
+
+if (shuffledArray[0] == 1) {
+    timeline.push(pre_start_2);
+    timeline.push(training_matrix_ungedämpft);
+    timeline.push(test_procedure_block_2);
+    
+} else {
+    timeline.push(pre_start_2);
+    timeline.push(training_matrix_gedämpft);
+    timeline.push(test_procedure_block_1);
+}
+
+
+
+
+// Lottery
+
+var lottery = {
+  type: 'survey-text',
+  button_label: "Weiter",
+  questions: [
+    // {prompt: "If you'd like to get a chance to win a ### voucher you can participate in the lottery by entering you email address below.", name: 'mail_address'} 
+    {prompt: "Sie haben es geschafft! Als kleines Dankeschön haben Sie nun die Möglichkeit, einen von zwei Gutscheinen (für Buchhandlung Moser oder Musik Hammer) im Wert von je 50 EUR zu gewinnen. Geben Sie hier Ihre E-Mail Adresse an, um am Gewinnspiel teilzunehmen.", name: 'mail_address'} 
+  ],
+  on_start: function() {
+        // set progress bar to 1
+        jsPsych.setProgressBar(1);
+    },
+};
+timeline.push(lottery);
+
+// Official End screen with no options
+
+var end_screen = {
+    type: 'html-button-response',
+    // stimulus: '<p>You are done, thank you!<p>',
+    stimulus: "<p>Das war's. Falls Sie Ihre E-Mail Adresse angegeben haben, werden wir Sie bald Informieren, ob Sie gewonnen haben.</p>",
+    //"<p>Sie können dieses Fenster nun schließen.</p>",
+        choices: ['Beenden'],
+}
+timeline.push(end_screen);
+
+jsPsych.init({
+    timeline: timeline,
+    show_progress_bar: true,
+    auto_update_progress_bar: false,
+    message_progress_bar: 'Fortschritt',
+    use_webaudio: false,
+    auto_preload: false,
+    
+    // try to preload images (doesn't work)
+    // preload_img: ["img/Beispielfragebogen_edit.png","img/Play.png"],
+
+    // All Audio files have to be preloadad here!
+    
+
+     // Data in the end(for use deactivate end_screen):
+    //on_finish: function(){
+    //    jsPsych.data.displayData();
+    //}
+});
